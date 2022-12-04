@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Главная{% endblock %}
+{% block active %}Главная{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+<div class="main">
+  <div class="container">
+    <h3>Информация по цеху:</h3>
+    <p>Огнетушители - {{ count }} из 500</p>
+    <h5>Партии в цеху:</h5>
+    <p>Готовые - {{ complite }}</p><p>Приняты - {{ income }}</p>
+  </div>
+  <div class="container">
+    <h3>Информация по складу:</h3>
+    <h5>Остатки расходников</h5>
+    <ul>
+      <li>ЗПУ порошок - 30</li>
+      <li>ЗПУ порошок малаая - 30</li>
+      <li>ЗПУ кислота конус - 40</li>
+      <li>ЗПУ кислота прямая - 27</li>
+    </ul>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Цех{% endblock %}
+{% block active %}Цех{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/workshop.css' %}">
+<h3 class="header">В партии в цеху:</h3>
+<div class="main">
+  <div class="conteiner">
+    <h5>Принятые:</h5>
+    {% for order in orders_n %}
+      <div class="order_u">
+        <div class="head_u" {% if order.time_in_work > 3 %} style="background-color: #e91717" {% endif %} >
+          <h6>{{ order.owner.firm}}</h6>
+          <h6>{{ order.owner.adress}}</h6>
+        </div>
+        <ul>
+          <li> Замена ЗПУ - {% if order.repair %} {{ order.repair_quantity }} шт. {% else %} Без замены {% endif %} </li>
+          <li>Огнетушители
+            <ul>
+              {% for item in order.positions.all %}
+                <li>{{ item.fire_ex.type }} : {{ item.quantity }} шт</li>
+              {% endfor %}
+            </ul>
+          </li>
+          <li>
+            <p>Время в работе {{ order.time_in_work }} дней</p>
+          </li>
+          <li><a href="order/finish/{{ order.pk }}{% if order.repair_quantity %}?rep={{order.repair_quantity}}{% endif %}"> <p>Выполнено</p> </a></li>
+        </ul>
+      </div>
+    {% endfor %}
+  </div>
+  <div class="conteiner">
+    <h5>Готовые:</h5>
+    {% for order in orders_c %}
+      <div class="order_f">
+        <div class="head_f">
+          <h6>{{ order.owner.firm}}</h6>
+          <h6>{{ order.owner.adress}}</h6>
+        </div>
+        <ul>
+          <li> Замена ЗПУ - {% if order.repair %} {{ order.repair_quantity }} шт. {% else %} Без замены {% endif %} </li>
+          <li>Огнетушители
+            <ul>
+              {% for item in order.positions.all %}
+                <li>{{ item.fire_ex.type }} : {{ item.quantity }} шт</li>
+              {% endfor %}
+            </ul>
+          </li>
+          <li><a href="order/unfinished/{{ order.id }}"> Не готов</a></li>
+        </ul>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
