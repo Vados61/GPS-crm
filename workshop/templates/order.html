@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Цех{% endblock %}
+{% block active %}Цех{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/order.css' %}">
+<h3 class="header">{{ order }}:</h3>
+<div class="conteiner">
+  <ul>
+    <li>
+      <h5 {% if order.status == "готово" or order.status == "отдано" %}
+      style="color: #2ae554"
+      {% else %}
+      style="color: yellow"
+      {% endif %}>
+    Статус: {{order.status}}
+      </h5>
+    </li>
+    <li>
+      <h5>Замена ЗПУ - {% if order.repair %} {{ order.repair_quantity }} шт. {% else %} Без замены {% endif %}</h5>
+    </li>
+    <li>
+      <h5>Огнетушители:</h5>
+      <ul>
+        {% for item in order.positions.all %}
+          <li>{{ item.fire_ex.type }} : {{ item.quantity }} шт</li>
+        {% endfor %}
+      </ul>
+    </li>
+    <li>
+      Описание: {{order.description}}
+    </li>
+    <li>
+      Дата приемки: {{order.date_input}}
+    </li>
+    <li>
+      Телефон для связи: {{order.owner.contact}}
+    </li>
+    {% if order.status == "готово" or order.status == "отдано" %}
+    <li><a href="{{ order.id }}?set_status=input"> Не готов</a></li>
+    {% endif %}
+    {% if order.status == "принято" %}
+    <li><a href="{{ order.id }}?set_status=finish"> Готово</a></li>
+    {% endif %}
+    {% if order.status == "готово" %}
+    <li>
+      <a href="{{ order.id }}?set_status=output"> Отдано</a>
+    </li>
+    {% endif %}
+  </ul>
+</div>
+{% endblock %}

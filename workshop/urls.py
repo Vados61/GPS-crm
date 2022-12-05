@@ -1,10 +1,12 @@
 from django.urls import path
 
-from workshop.views import index, workshop, finish_order, unfinished_order
+from workshop.views import index, workshop_view, order_view, client_view
 
 urlpatterns = [
     path('', index, name='home'),
-    path('workshop', workshop, name='workshop'),
-    path('order/finish/<int:pk>', finish_order, name='finish_order'),
-    path('order/unfinished/<int:pk>', unfinished_order, name='unfinished_order'),
+    path('workshop', workshop_view, name='workshop'),
+    path('order', order_view, name='order'),
+    path('order/<int:pk>', order_view),
+    path('client', client_view, name='client'),
+    path('client/<int:pk>', client_view),
 ]

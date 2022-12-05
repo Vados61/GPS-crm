@@ -29,12 +29,13 @@ class Order(models.Model):
         verbose_name = 'Партия'
         verbose_name_plural = 'Партии'
 
-    def complite(self, count_repair=0):
-        self.status = "готово"
-        self.repair_quantity = count_repair
-
-    def unfinished(self):
-        self.status = "принято"
+    def set_status(self, status):
+        if status == 'input':
+            self.status = 'принято'
+        if status == 'finish':
+            self.status = 'готово'
+        if status == 'output':
+            self.status = 'отдано'
 
     def time_in_work(self):
         result = datetime.date.today() - self.date_input

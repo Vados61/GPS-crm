@@ -18,7 +18,7 @@
   <body>
       <!-- Navigation -->
     <nav class="navbar navbar-expand-lg flex-column flex-md-row navbar-light" style="background-color: #fd7e14;">
-      <a class="navbar-brand" href="{% url 'home' %}">ГлавПожСнаб</a>
+      <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'image/logo.png' %}" alt="ГлавПожСнаб" style="width: 35%; height: 35%"></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -30,8 +30,8 @@
           {% if active == "Цех" %}<li class="nav-item active">{% else %} <li class="nav-item"> {% endif %}
             <a class="nav-link" href="{% url 'workshop' %}">Цех {% if active == "Цех" %}<span class="sr-only">(current)</span> {% endif %} </a>
           </li>
-          {% if active == "Склад" %}<li class="nav-item active">{% else %} <li class="nav-item"> {% endif %}
-            <a class="nav-link" href="#">Склад {% if active == "Склад" %}<span class="sr-only">(current)</span> {% endif %} </a>
+          {% if active == "Клиенты" %}<li class="nav-item active">{% else %} <li class="nav-item"> {% endif %}
+            <a class="nav-link" href="{% url 'client' %}">Клиенты {% if active == "Клиенты" %}<span class="sr-only">(current)</span> {% endif %} </a>
           </li>
           <li class="nav-item">
             <a class="nav-link disabled" href="#">Машины</a>

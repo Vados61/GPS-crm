@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Клиенты{% endblock %}
+{% block active %}Клиенты{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/clients.css' %}">
+<h3 class="header">Наши клиенты:</h3>
+<ul>
+{% for client in clients %}
+  <li><a href="{% url 'client' %}/{{client.id}}"><h4>{{client}}</h4></a></li>
+  <h5>Офисы: {{client.offices.count}} отделений</h5>
+{% endfor %}
+</ul>
+{% endblock %}

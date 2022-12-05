@@ -11,10 +11,12 @@
     <h5>Принятые:</h5>
     {% for order in orders_n %}
       <div class="order_u">
-        <div class="head_u" {% if order.time_in_work > 3 %} style="background-color: #e91717" {% endif %} >
-          <h6>{{ order.owner.firm}}</h6>
-          <h6>{{ order.owner.adress}}</h6>
-        </div>
+        <a href="order/{{order.id}}">
+          <div class="head_u" {% if order.time_in_work > 3 %} style="background-color: #e91717" {% endif %} >
+            <h6>{{ order.owner.firm}}</h6>
+            <h6>{{ order.owner.adress}}</h6>
+          </div>
+        </a>
         <ul>
           <li> Замена ЗПУ - {% if order.repair %} {{ order.repair_quantity }} шт. {% else %} Без замены {% endif %} </li>
           <li>Огнетушители
@@ -27,7 +29,6 @@
           <li>
             <p>Время в работе {{ order.time_in_work }} дней</p>
           </li>
-          <li><a href="order/finish/{{ order.pk }}{% if order.repair_quantity %}?rep={{order.repair_quantity}}{% endif %}"> <p>Выполнено</p> </a></li>
         </ul>
       </div>
     {% endfor %}
@@ -36,10 +37,12 @@
     <h5>Готовые:</h5>
     {% for order in orders_c %}
       <div class="order_f">
-        <div class="head_f">
-          <h6>{{ order.owner.firm}}</h6>
-          <h6>{{ order.owner.adress}}</h6>
-        </div>
+        <a href="order/{{order.id}}">
+          <div class="head_f">
+            <h6>{{ order.owner.firm}}</h6>
+            <h6>{{ order.owner.adress}}</h6>
+          </div>
+        </a>
         <ul>
           <li> Замена ЗПУ - {% if order.repair %} {{ order.repair_quantity }} шт. {% else %} Без замены {% endif %} </li>
           <li>Огнетушители
@@ -49,7 +52,6 @@
               {% endfor %}
             </ul>
           </li>
-          <li><a href="order/unfinished/{{ order.id }}"> Не готов</a></li>
         </ul>
       </div>
     {% endfor %}

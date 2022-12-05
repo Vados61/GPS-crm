@@ -1,7 +1,7 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
-from workshop.models import Order, OrderPosition
+from workshop.models import Order, OrderPosition, Firm
 
 
 def index(request):
@@ -23,7 +23,7 @@ def index(request):
     return render(request, 'home.html', context)
 
 
-def workshop(request):
+def workshop_view(request):
     orders_c = Order.objects.filter(status='готово')
     orders_n = Order.objects.filter(status='принято')
     context = {
@@ -34,16 +34,45 @@ def workshop(request):
     return render(request, 'workshop.html', context)
 
 
-def finish_order(request, pk):
-    count_repair = request.GET.get('rep', 0)
+def order_view(request, pk):
+    status = request.GET.get('set_status')
     order = Order.objects.get(id=pk)
-    order.complite(count_repair)
-    order.save()
-    return HttpResponseRedirect("/workshop")
+    if status:
+        order.set_status(status)
+        order.save()
+        return HttpResponseRedirect(f'/order/{pk}')
+    context = {
+        "order": order,
+        'active': 'Цех',
+    }
+    return render(request, 'order.html', context)
 
 
-def unfinished_order(request, pk):
-    order = Order.objects.get(id=pk)
-    order.unfinished()
-    order.save()
-    return HttpResponseRedirect("/workshop")
+def client_view(request, pk=None):
+    if pk is None:
+        clients = Firm.objects.all()
+        context = {
+            "clients": clients,
+            'active': 'Клиенты',
+        }
+        return render(request, "clients.html", context)
+    client = Firm.objects.get(id=pk)
+    context = {
+        "client": client,
+        'active': 'Клиенты',
+    }
+    return render(request, "client.html", context)
+
+# def finish_order(request, pk):
+#     count_repair = request.GET.get('rep', 0)
+#     order = Order.objects.get(id=pk)
+#     order.complite(count_repair)
+#     order.save()
+#     return HttpResponseRedirect("/workshop")
+#
+#
+# def unfinished_order(request, pk):
+#     order = Order.objects.get(id=pk)
+#     order.unfinished()
+#     order.save()
+#     return HttpResponseRedirect("/workshop")
