@@ -14,7 +14,7 @@
   <ul>
     {% for order in office.orders.all %}
     <div class="order">
-    <li><a href="{% url 'order'%}/{{order.id}}">Партия от {{order.date_input}}</a></li>
+    <li><a href="{% url 'order' order.id %}">Партия от {{order.date_input}}</a></li>
     Статус - {{order.status}}
     </div>
     {% endfor %}

@@ -1,6 +1,8 @@
 from django.db import models
 import datetime
 
+from django.urls import reverse
+
 
 class FireExtingusher(models.Model):
     type = models.CharField(max_length=20, verbose_name='Тип')
@@ -45,8 +47,14 @@ class Order(models.Model):
         result = datetime.date.today() - self.date_output
         return result.days
 
+    def total_fire_ex(self):
+        return sum([pos.quantity for pos in self.positions.all()])
+
     def __str__(self):
         return f'Партия {self.owner} от {self.date_input}'
+
+    def get_absolute_url(self):
+        return reverse('order', kwargs={'order_pk': self.pk})
 
 
 class OrderPosition(models.Model):

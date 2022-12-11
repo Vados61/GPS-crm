@@ -11,24 +11,16 @@
     <h5>Принятые:</h5>
     {% for order in orders_n %}
       <div class="order_u">
-        <a href="order/{{order.id}}">
-          <div class="head_u" {% if order.time_in_work > 3 %} style="background-color: #e91717" {% endif %} >
+        <a href="{{ order.get_absolute_url }}">
+          <div class="head_u" {% if order.time_in_work > 7 %} style="background-color: #e91717" {% endif %} >
             <h6>{{ order.owner.firm}}</h6>
             <h6>{{ order.owner.adress}}</h6>
           </div>
         </a>
         <ul>
           <li> Замена ЗПУ - {% if order.repair %} {{ order.repair_quantity }} шт. {% else %} Без замены {% endif %} </li>
-          <li>Огнетушители
-            <ul>
-              {% for item in order.positions.all %}
-                <li>{{ item.fire_ex.type }} : {{ item.quantity }} шт</li>
-              {% endfor %}
-            </ul>
-          </li>
-          <li>
-            <p>Время в работе {{ order.time_in_work }} дней</p>
-          </li>
+          <li>Огнетушителей - {{ order.total_fire_ex }} шт.</li>
+          <li>Время в работе {{ order.time_in_work }} дней</li>
         </ul>
       </div>
     {% endfor %}
@@ -45,13 +37,8 @@
         </a>
         <ul>
           <li> Замена ЗПУ - {% if order.repair %} {{ order.repair_quantity }} шт. {% else %} Без замены {% endif %} </li>
-          <li>Огнетушители
-            <ul>
-              {% for item in order.positions.all %}
-                <li>{{ item.fire_ex.type }} : {{ item.quantity }} шт</li>
-              {% endfor %}
-            </ul>
-          </li>
+          <li>Огнетушителей - {{ order.total_fire_ex }} шт.</li>
+            <li>Сделано {{ order.finish_time }} дней назад</li>
         </ul>
       </div>
     {% endfor %}

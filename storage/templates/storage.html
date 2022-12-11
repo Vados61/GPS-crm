@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Склад{% endblock %}
+{% block active %}Склад{% endblock %}
+
+{% block content %}
+<h3>Склады:</h3>
+{% for stock in storages %}
+{{ stock }}
+Остатки:
+  <ul>
+  {% for position in stock.positions.all %}
+  <li>{{ position }}</li>
+  {% endfor %}
+  </ul>
+<a href="#">приход</a>
+<a href="#">расход</a>
+{% endfor %}
+{% endblock %}

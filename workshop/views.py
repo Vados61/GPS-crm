@@ -34,13 +34,13 @@ def workshop_view(request):
     return render(request, 'workshop.html', context)
 
 
-def order_view(request, pk):
+def order_view(request, order_pk):
     status = request.GET.get('set_status')
-    order = Order.objects.get(id=pk)
+    order = Order.objects.get(pk=order_pk)
     if status:
         order.set_status(status)
         order.save()
-        return HttpResponseRedirect(f'/order/{pk}')
+        return HttpResponseRedirect(f'/order/{order_pk}')
     context = {
         "order": order,
         'active': 'Цех',
@@ -62,17 +62,3 @@ def client_view(request, pk=None):
         'active': 'Клиенты',
     }
     return render(request, "client.html", context)
-
-# def finish_order(request, pk):
-#     count_repair = request.GET.get('rep', 0)
-#     order = Order.objects.get(id=pk)
-#     order.complite(count_repair)
-#     order.save()
-#     return HttpResponseRedirect("/workshop")
-#
-#
-# def unfinished_order(request, pk):
-#     order = Order.objects.get(id=pk)
-#     order.unfinished()
-#     order.save()
-#     return HttpResponseRedirect("/workshop")

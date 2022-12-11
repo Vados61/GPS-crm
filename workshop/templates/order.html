@@ -5,21 +5,16 @@
 {% block active %}Цех{% endblock %}
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/order.css' %}">
-<h3 class="header">{{ order }}:</h3>
-<div class="conteiner">
+
+<div id="order" class="conteiner">
+  <h3 class="header">Партия <a href="{% url 'client' %}/{{order.owner.firm.id}}">{{ order.owner.firm }}</a>
+  {{ order.owner.adress }}:
+  </h3>
   <ul>
     <li>
-      <h5 {% if order.status == "готово" or order.status == "отдано" %}
-      style="color: #2ae554"
-      {% else %}
-      style="color: yellow"
-      {% endif %}>
-    Статус: {{order.status}}
-      </h5>
+      <h5> Статус: {{order.status}}</h5>
     </li>
-    <li>
-      <h5>Замена ЗПУ - {% if order.repair %} {{ order.repair_quantity }} шт. {% else %} Без замены {% endif %}</h5>
-    </li>
+
     <li>
       <h5>Огнетушители:</h5>
       <ul>
@@ -27,6 +22,9 @@
           <li>{{ item.fire_ex.type }} : {{ item.quantity }} шт</li>
         {% endfor %}
       </ul>
+    </li>
+    <li>
+      Замена ЗПУ: {% if order.repair %} {{ order.repair_quantity }} шт. {% else %} Без замены {% endif %}
     </li>
     <li>
       Описание: {{order.description}}
